@@ -1,5 +1,5 @@
 import "./styles.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function App() {
   const [advice, setAdvice] = useState("");
@@ -12,13 +12,24 @@ export default function App() {
     setCount((c) => c + 1); // on reload always starts at 0
   }
 
+  useEffect(function () {
+    getAdvice();
+  }, []); // dependency array
+
   return (
     <div>
       <h1>{advice}</h1>
       <button onClick={getAdvice}>Get Advice</button>
-      <p>
-        You have read <strong>{count}</strong> pieces of advice
-      </p>
+      <Message count={count} />
     </div>
+  );
+} // End of the internal app
+
+// Component function must be cap
+function Message(props) {
+  return (
+    <p>
+      You have read <strong>{props.count}</strong> pieces of advice
+    </p>
   );
 }
